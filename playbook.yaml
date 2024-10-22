@@ -1,0 +1,24 @@
+---
+- name: Atualizar, fazer upgrade e instalar o Apache no Ubuntu
+  hosts: all
+  become: yes  # Ganhar privilégios de superusuário
+  tasks:
+    - name: Atualizar cache do apt
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Fazer upgrade completo dos pacotes
+      ansible.builtin.apt:
+        upgrade: dist
+
+    - name: Instalar Apache
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+
+    - name: Iniciar o serviço Apache
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes
+
